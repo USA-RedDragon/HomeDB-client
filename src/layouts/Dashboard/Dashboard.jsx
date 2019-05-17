@@ -56,10 +56,6 @@ class App extends React.Component {
   render() {
     const { classes, ...rest } = this.props;
 
-    if(!Auth.isLoggedIn()){
-      return (<Redirect to="/login"/>);
-    }
-
     return (
       <div className={classes.wrapper}>
         <Sidebar
