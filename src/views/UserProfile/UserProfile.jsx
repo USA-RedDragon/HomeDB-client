@@ -55,7 +55,7 @@ class UserProfile extends React.Component {
   }
 
   componentDidMount() {
-    Api.get('user/current').then(res => {
+    Api.get('users/current').then(res => {
       this.setState(Object.assign({}, res.data));
     })
   }
@@ -78,7 +78,7 @@ class UserProfile extends React.Component {
     } else if(this.state.password !== this.state.confirm_password){
       this.setState({error: "Passwords do not match."});
     } else {
-      Api.put('user/current', this.state).then(res => {
+      Api.put('users/current', this.state).then(res => {
         this.setState({message: 'Account updated.'});
       }).catch(err => {
         this.setState({error: err.response.data.message});

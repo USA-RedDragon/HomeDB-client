@@ -14,7 +14,7 @@ class Logout extends React.Component {
   }
 
   logout() {    
-    Api.post('logout')
+    Api.get('auth/logout')
     .then(() => {
       Auth.logout();
       this.props.history.push('/login');

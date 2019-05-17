@@ -54,7 +54,7 @@ class ViewAccount extends React.Component {
 
   componentWillMount() {
     if(this.props.match.params.id){
-      Api.get(`account/${this.props.match.params.id}`).then(res => {
+      Api.get(`accounts/${this.props.match.params.id}`).then(res => {
         this.setState(Object.assign({}, res.data));
       });
     }
@@ -74,13 +74,13 @@ class ViewAccount extends React.Component {
     this.setState({error: '', message: ''});
 
     if(this.props.match.params.id){
-      Api.put(`account/${this.props.match.params.id}`, this.state).then(res => {
+      Api.put(`accounts/${this.props.match.params.id}`, this.state).then(res => {
         this.setState({message: 'Account saved.'});
       }).catch(err => {
         this.setState({error: err.response.data.message});
       });
     } else {
-      Api.post('account', this.state).then(res => {
+      Api.post('accounts', this.state).then(res => {
         this.setState({message: 'Account added.'});
         this.props.history.push(`/account/${res.data.id}`);
       }).catch(err => {
@@ -91,7 +91,7 @@ class ViewAccount extends React.Component {
 
   deleteAccount() {
     if(window.confirm("Are you sure you want to delete this account?")){
-      Api.delete(`account/${this.props.match.params.id}`).then(res => {
+      Api.delete(`accounts/${this.props.match.params.id}`).then(res => {
         this.props.history.push('/accounts');
       });
     }

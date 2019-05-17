@@ -38,7 +38,7 @@ class Transactions extends React.Component {
       this.setState({transactions: res.data});
     });
 
-    Api.get('transaction_types').then(res => {
+    Api.get('transactions/types').then(res => {
       this.setState({transaction_types: res.data});
     });
 	}

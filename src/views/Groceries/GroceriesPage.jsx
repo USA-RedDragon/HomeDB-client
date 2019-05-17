@@ -82,10 +82,10 @@ class Groceries extends React.Component {
     Api.get('groceries').then(res => {
       this.setState({ all_groceries: res.data });
     });
-    Api.get('default_groceries').then(res => {
+    Api.get('groceries/default').then(res => {
       this.setState({ default_groceries: res.data });
     });
-    Api.get('grocery_list').then(res => {
+    Api.get('groceries/list').then(res => {
       this.setState({grocery_list: res.data});
     });
   }
@@ -105,7 +105,7 @@ class Groceries extends React.Component {
 
   handleDialogCloseConfirm() {
     this.handleDialogClose();
-    Api.post('grocery_list', {
+    Api.post('groceries/list', {
       id: this.state.addGroceryListItem,
       amount: this.state.addGroceryListAmount
     }).then(res => {
@@ -117,7 +117,7 @@ class Groceries extends React.Component {
 
   handleDefaultDialogCloseConfirm() {
     this.handleDialogClose();
-    Api.post('default_grocery_list', {
+    Api.post('groceries/default', {
       id: this.state.addDefaultGroceryListItem,
       amount: this.state.addDefaultGroceryListAmount
     }).then(res => {
@@ -138,19 +138,19 @@ class Groceries extends React.Component {
   }
 
   generateList() {
-    Api.post('generate_groceries').then(res => {
+    Api.post('groceries/generate').then(res => {
         this.setState({grocery_list: res.data});
     });
   }
 
   clearList() {
-    Api.delete('clear_groceries').then(res => {
+    Api.delete('groceries/list').then(res => {
         this.setState({grocery_list: []});
     });
   }
 
   clearDefaultList() {
-    Api.delete('clear_default_groceries').then(res => {
+    Api.delete('groceries/default').then(res => {
         this.setState({default_groceries: []});
     });
   }

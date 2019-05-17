@@ -55,7 +55,7 @@ class PaychecksPage extends React.Component {
 
   componentWillMount() {
     if(this.props.match.params.id){
-      Api.get(`paycheck/${this.props.match.params.id}`).then(res => {
+      Api.get(`paychecks/${this.props.match.params.id}`).then(res => {
         this.setState(Object.assign({}, res.data));
         this.setState({ account: res.data.accountId });
       });
@@ -82,13 +82,13 @@ class PaychecksPage extends React.Component {
     this.setState({error: '', message: ''});
 
     if(this.props.match.params.id) {
-      Api.put(`paycheck/${this.props.match.params.id}`, this.state).then(res => {
+      Api.put(`paychecks/${this.props.match.params.id}`, this.state).then(res => {
         this.setState({message: 'Paycheck saved.'});
       }).catch(err => {
         this.setState({error: err.response.data.message});
       });
     } else {
-      Api.post('paycheck', this.state).then(res => {
+      Api.post('paychecks', this.state).then(res => {
         this.setState({message: 'Paycheck added.'});
         this.props.history.push(`/paycheck/${res.data.id}`);
       }).catch(err => {
@@ -99,7 +99,7 @@ class PaychecksPage extends React.Component {
 
   deletePaycheck() {
     if(window.confirm("Are you sure you want to delete this paycheck?")){
-      Api.delete(`paycheck/${this.props.match.params.id}`).then(res => {
+      Api.delete(`paychecks/${this.props.match.params.id}`).then(res => {
         this.props.history.push('/paychecks');
       });
     }

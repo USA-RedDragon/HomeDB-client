@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
-import axios from "axios";
 
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
@@ -12,6 +11,7 @@ import SnackbarContent from "components/Snackbar/SnackbarContent.jsx";
 import Logo from "components/Logo/Logo.jsx";
 
 import Auth from "services/auth.js";
+import Api from "../../services/api";
 
 const styles = {
   wrapper: {
@@ -39,8 +39,8 @@ class Login extends React.Component {
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
   }
 
-  componentWillMount() {
-    if(Auth.isLoggedIn()){
+  async componentWillMount() {
+    if(await Auth.isLoggedIn()){
       window.location = '/dashboard';
     }
   }
@@ -61,7 +61,7 @@ class Login extends React.Component {
     e.preventDefault();
     this.setState({error: ''});
     
-    axios.post("https:/homesever.mcswainsoftware.com/test/api/login", {username: this.state.username, password: this.state.password})
+    Api.post("auth/login", {username: this.state.username, password: this.state.password})
     .then(res => {
       Auth.setToken(res.data.token);
       //refresh page

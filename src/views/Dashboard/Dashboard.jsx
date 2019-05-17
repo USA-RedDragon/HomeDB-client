@@ -50,22 +50,22 @@ class Dashboard extends React.Component {
     Api.get('transactions', { params: { limit: 5 }}).then(res => {
         this.setState({transactions: res.data});
     });
-    Api.get('total_money').then(res => {
+    Api.get('stats/money').then(res => {
       this.setState({total_money: res.data});
     });
-    Api.get('todo_count').then(res => {
+    Api.get('stats/todos').then(res => {
       this.setState({total_todos: res.data});
     });
-    Api.get('financial_state').then(res => {
-      this.setState({financial_state: res.data});
+    Api.get('stats/health').then(res => {
+      this.setState({financial_state: res.data.health});
     });
-    Api.get('weekly_transactions').then(res => {
+    Api.get('stats/weekly_transactions').then(res => {
       this.setState({weeklyTransactionsChartData: res.data});
     });
-    Api.get('monthly_balances').then(res => {
+    Api.get('stats/monthly_balances').then(res => {
       this.setState({monthlyBalancesChartData: res.data});
     });
-    Api.get('yearly_debts').then(res => {
+    Api.get('stats/yearly_debts').then(res => {
       this.setState({yearlyDebtsChartData: res.data});
     });
   }

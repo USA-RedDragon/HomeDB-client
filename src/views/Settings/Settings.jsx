@@ -52,7 +52,7 @@ class Settings extends React.Component {
   }
 
   componentDidMount() {
-    Api.get('user/current').then(res => {
+    Api.get('users/current').then(res => {
       this.setState(Object.assign({}, res.data));
     })
   }
@@ -71,7 +71,7 @@ class Settings extends React.Component {
 
     this.setState({error: '', message: ''});
    
-    Api.put('user/current', this.state).then(res => {
+    Api.put('users/current', this.state).then(res => {
       this.setState({message: 'Account updated.'});
     }).catch(err => {
       this.setState({error: err.response.data.message});

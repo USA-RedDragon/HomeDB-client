@@ -66,7 +66,7 @@ class ViewTransactionPage extends React.Component {
 
   componentWillMount() {
     if(this.props.match.params.id){
-      Api.get(`transaction/${this.props.match.params.id}`).then(res => {
+      Api.get(`transactions/${this.props.match.params.id}`).then(res => {
         this.setState(Object.assign({}, res.data));
         this.setState({ card: res.data.account.id });
         this.setState({ type: res.data.transaction_type.id });
@@ -77,7 +77,7 @@ class ViewTransactionPage extends React.Component {
   }
 
   componentDidMount() {
-    Api.get('transaction_types').then(res => {
+    Api.get('transactions/types').then(res => {
       this.setState({ types: res.data });
     });
     Api.get('accounts').then(res => {
@@ -97,13 +97,13 @@ class ViewTransactionPage extends React.Component {
     })
 
     if(this.props.match.params.id){
-      Api.put(`transaction/${this.props.match.params.id}`, this.state).then(res => {
+      Api.put(`transactions/${this.props.match.params.id}`, this.state).then(res => {
         this.setState({message: 'Transaction saved.'});
       }).catch(err => {
         this.setState({error: err.response.data.message});
       });
     } else {
-      Api.post('transaction', this.state).then(res => {
+      Api.post('transactions', this.state).then(res => {
         this.setState({message: 'Transaction saved.'});
         this.props.history.push(`/transaction/${res.data.id}`);
       }).catch(err => {
@@ -114,7 +114,7 @@ class ViewTransactionPage extends React.Component {
 
   deleteTransaction() {
     if(window.confirm("Are you sure you want to delete this transaction?")){
-      Api.delete(`transaction/${this.props.match.params.id}`).then(res => {
+      Api.delete(`transactions/${this.props.match.params.id}`).then(res => {
         this.props.history.push('/dashboard');
       });
     }

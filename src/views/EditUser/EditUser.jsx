@@ -60,7 +60,7 @@ class UserProfile extends React.Component {
 
   componentWillMount() {
     if(this.props.match.params.id){
-      Api.get(`user/${this.props.match.params.id}`).then(res => {
+      Api.get(`users/${this.props.match.params.id}`).then(res => {
         this.setState(Object.assign({}, res.data));
       });
     }
@@ -81,13 +81,13 @@ class UserProfile extends React.Component {
     this.setState({error: '', message: ''});
 
     if(this.props.match.params.id) {
-      Api.put(`user/${this.props.match.params.id}`, this.state).then(res => {
+      Api.put(`users/${this.props.match.params.id}`, this.state).then(res => {
         this.setState({message: 'User saved.'});
       }).catch(err => {
         this.setState({error: err.response.data.message});
       });
     } else {
-      Api.post('user', this.state).then(res => {
+      Api.post('users', this.state).then(res => {
         this.setState({message: 'User added.'});
         this.props.history.push(`/user/${res.data.id}`);
       }).catch(err => {
@@ -98,7 +98,7 @@ class UserProfile extends React.Component {
 
   deleteUser() {
     if(window.confirm("Are you sure you want to delete this user?")){
-      Api.delete(`user/${this.props.match.params.id}`).then(res => {
+      Api.delete(`users/${this.props.match.params.id}`).then(res => {
         this.props.history.push('/users');
       });
     }

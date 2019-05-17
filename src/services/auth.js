@@ -1,4 +1,5 @@
 import decode from "jwt-decode";
+import Api from "./api";
 
 class AuthService {
 
@@ -14,9 +15,14 @@ class AuthService {
     localStorage.removeItem('auth_token');
   }
 
-  isLoggedIn() {
-    const token = this.getToken();
-    return !!token && !this.isTokenExpired(token);
+  async isLoggedIn() {
+    try {
+      let res = await Api.get('users/current')
+      console.log(res.data)
+      return !!res
+    } catch(err) {
+      return false;
+    }
   }
 
   isTokenExpired(token) {

@@ -54,7 +54,7 @@ class ViewDebtsPage extends React.Component {
 
   componentWillMount() {
     if(this.props.match.params.id){
-      Api.get(`debt/${this.props.match.params.id}`).then(res => {
+      Api.get(`debts/${this.props.match.params.id}`).then(res => {
         this.setState(Object.assign({}, res.data));
         this.setState({ account: res.data.account.id });
       });
@@ -69,13 +69,13 @@ class ViewDebtsPage extends React.Component {
       message: ''
     })
     if(this.props.match.params.id){
-      Api.put(`debt/${this.props.match.params.id}`, this.state).then(res => {
+      Api.put(`debts/${this.props.match.params.id}`, this.state).then(res => {
         this.setState({message: 'Debt saved.'});
       }).catch(err => {
         this.setState({error: err.response.data.message});
       });
     } else {
-      Api.post('debt', this.state).then(res => {
+      Api.post('debts', this.state).then(res => {
         this.setState({message: 'Debt saved.'});
         this.props.history.push(`/debt/${res.data.id}`);
       }).catch(err => {
@@ -86,7 +86,7 @@ class ViewDebtsPage extends React.Component {
 
   deleteDebt() {
     if(window.confirm("Are you sure you want to delete this debt?")){
-      Api.delete(`debt/${this.props.match.params.id}`).then(res => {
+      Api.delete(`debts/${this.props.match.params.id}`).then(res => {
         this.props.history.push('/debts');
       });
     }

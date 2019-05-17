@@ -34,7 +34,6 @@ const styles = {
   }
 };
 
-
 class ViewTransactionPage extends React.Component {
 
   constructor(props, context) {
@@ -53,7 +52,7 @@ class ViewTransactionPage extends React.Component {
 
   componentWillMount() {
     if(this.props.match.params.id){
-      Api.get(`transaction_type/${this.props.match.params.id}`).then(res => {
+      Api.get(`transactions/types/${this.props.match.params.id}`).then(res => {
         this.setState(Object.assign({}, res.data));
       });
     }
@@ -68,13 +67,13 @@ class ViewTransactionPage extends React.Component {
     })
 
     if(this.props.match.params.id){
-      Api.put(`transaction_type/${this.props.match.params.id}`, this.state).then(res => {
+      Api.put(`transactions/types/${this.props.match.params.id}`, this.state).then(res => {
         this.setState({message: 'Transaction saved.'});
       }).catch(err => {
         this.setState({error: err.response.data.message});
       });
     } else {
-      Api.post('transaction_type', this.state).then(res => {
+      Api.post('transactions/types', this.state).then(res => {
         this.setState({message: 'Transaction Type saved.'});
         this.props.history.push(`/transaction_type/${res.data.id}`);
       }).catch(err => {
@@ -85,7 +84,7 @@ class ViewTransactionPage extends React.Component {
 
   deleteTransactionType() {
     if(window.confirm("Are you sure you want to delete this transaction?")){
-      Api.delete(`transaction_type/${this.props.match.params.id}`).then(res => {
+      Api.delete(`transactions/types/${this.props.match.params.id}`).then(res => {
         this.props.history.push('/dashboard');
       });
     }

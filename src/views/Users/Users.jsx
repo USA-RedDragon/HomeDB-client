@@ -34,14 +34,13 @@ class Users extends React.Component {
   }
 
   getUsers() {
-    Api.get('user').then(res => {
+    Api.get('users').then(res => {
       this.setState({users: res.data});
     });
 	}
 
-
   getCurrentUser() {
-    Api.get('user/current').then(res => {
+    Api.get('users/current').then(res => {
       this.setState({currentUser: res.data});
     })
   }
