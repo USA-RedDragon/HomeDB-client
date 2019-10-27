@@ -13,6 +13,7 @@ import CardFooter from 'components/Card/CardFooter.jsx';
 import Snackbar from 'components/Snackbar/Snackbar.jsx';
 
 import Api from 'services/api.js';
+import PlaidLinkButton from 'components/PlaidLinkButton/PlaidLinkButton.jsx';
 
 const styles = {
     cardCategoryWhite: {
@@ -49,6 +50,7 @@ class ViewAccount extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.saveAccount = this.saveAccount.bind(this);
         this.deleteAccount = this.deleteAccount.bind(this);
+        this.handleOnSuccess = this.handleOnSuccess.bind(this);
     }
 
     componentWillMount() {
@@ -96,6 +98,21 @@ class ViewAccount extends React.Component {
         }
     }
 
+    handleOnSuccess(token, metadata) {
+        this.setState({ name: metadata.account.name });
+        Api.post('accounts/link',
+            { token, mask: metadata.account.mask, name: metadata.account.name }
+        ).then((res) => {
+            this.setState({ routing_number: res.data.routing_number });
+            this.setState({ account_number: res.data.account_number });
+            this.setState({ balance: res.data.balance });
+            this.setState({ message: 'Account added.' });
+            this.props.history.push(`/account/${res.data.id}`);
+        }).catch((err) => {
+            this.setState({ error: err.response.data.message });
+        });
+    }
+
     render() {
         const { classes } = this.props;
 
@@ -111,7 +128,15 @@ class ViewAccount extends React.Component {
                                 <CardBody>
                                     <Grid container>
                                         <GridItem xs={12} sm={12} md={12}>
-
+                                            {!this.props.match.params.id && <PlaidLinkButton
+                                                color="primary"
+                                                clientName="HomeDB"
+                                                env={process.env.REACT_APP_PLAID_ENV}
+                                                product={['auth', 'transactions']}
+                                                publicKey={process.env.REACT_APP_PLAID_PUBLIC_KEY}
+                                                onSuccess={this.handleOnSuccess}>
+                                                Link with Plaid
+                                            </PlaidLinkButton>}
                                             <CustomInput
                                                 labelText="Name"
                                                 id="name"
